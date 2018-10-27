@@ -316,27 +316,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameAsset\Scripts\Base\GameEnter.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Enemy\EnemyComponent.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Entity\EntityLogic\BaseUnit.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Entity\EntityLogic\CameraLogic.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Entity\EntityLogic\EnemyLogic.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Entity\EntityLogic\PlayerLogic.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Entity\EntityLogic\Target.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Entity\EntityLogic\UnitManager.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\EventBase.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\EventComponent.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\EventID.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\EventManager.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\EventParam.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\ForceChangeEvent.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\ForceChangeEventParam.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\ScoreChangeEvent.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Event\ScoreChangeEventParam.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Map\MapManager.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\player\PlayerComponent.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\Spawner\Spawner.cs" />
-    <Compile Include="Assets\GameAsset\Scripts\UI\UIMainForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.Builtin.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.Custom.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant.ProcedureData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EnemyData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\PlayerData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\TargetData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\CameraLogic.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\EnemyLogic.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\PlayerLogic.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\TargetLogic.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\ForceChangeEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\ScoreChangeEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\GameMode.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Map\MapComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureBase.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureLaunch.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureMain.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Spawn\SpawnComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\MainForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UGuiForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameFramework\Libraries\GameFramework.xml" />
