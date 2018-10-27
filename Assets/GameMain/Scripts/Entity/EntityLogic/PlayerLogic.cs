@@ -1,6 +1,9 @@
-﻿using GameFramework;
+﻿using System;
+using GameFramework;
+using GameFramework.Event;
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using UnityEngine.EventSystems;
 
 namespace CollisionBall
 {
@@ -15,6 +18,7 @@ namespace CollisionBall
         private Rigidbody2D _rigidbody;
         private float _force;
         private float score;
+        private float _costScale = 5;
 
         public float Score
         {
@@ -37,6 +41,23 @@ namespace CollisionBall
             base.OnInit(userData);
             Log.Info("Player.OnInit()");
             _rigidbody = transform.GetComponent<Rigidbody2D>();
+            GameEntry.Event.Subscribe(StopSkillEventArgs.EventId, OnReceiveStopSkill);
+            GameEntry.Event.Subscribe(GoSkillEventArgs.EventId, OnReceiveGoSkill);
+        }
+
+        private void OnReceiveGoSkill(object sender, GameEventArgs e)
+        {
+            Score -= 20;
+            GameEntry.Event.Fire(this, new ScoreChangeEventArgs(Score));
+            Vector2 dir = _rigidbody.velocity.normalized;
+            _rigidbody.velocity += dir * 5;
+        }
+
+        private void OnReceiveStopSkill(object sender, GameEventArgs e)
+        {
+            Score -= _rigidbody.velocity.magnitude * _costScale;
+            GameEntry.Event.Fire(this, new ScoreChangeEventArgs(Score));
+            _rigidbody.velocity = Vector2.zero;
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -119,8 +140,13 @@ namespace CollisionBall
 
         void OnMouseKeepDown(int index)
         {
-            if (_rigidbody.velocity.magnitude > 0.15)
+            if (EventSystem.current.IsPointerOverGameObject())
                 return;
+            if (_rigidbody.velocity.magnitude > 0.15)
+            {
+                GameEntry.Event.Fire(this, new ShowArrowsEventArgs(Vector3.zero, Quaternion.identity, false));
+                return;
+            }
             if (Input.GetMouseButton(index))
             {
                 _click_point = Input.mousePosition;
@@ -129,13 +155,23 @@ namespace CollisionBall
                 float costScore = _force / 100;
                 GameEntry.Event.Fire(this, new ForceChangeEventArgs(_force));
                 GameEntry.Event.Fire(this, new ScoreChangeEventArgs(Score - costScore));
+
+
+                Quaternion rot = Quaternion.FromToRotation(Vector3.right, (screen_point - _click_point).normalized);
+                rot.eulerAngles = new Vector3(0, 0, rot.eulerAngles.z);
+                GameEntry.Event.Fire(this, new ShowArrowsEventArgs(screen_point+ (screen_point - _click_point), rot, true));
             }
         }
 
         void OnMouseButtonUp(int index)
         {
-            if (_rigidbody.velocity.magnitude > 0.15)
+            if (EventSystem.current.IsPointerOverGameObject())
                 return;
+            if (_rigidbody.velocity.magnitude > 0.15)
+            {
+                GameEntry.Event.Fire(this, new ShowArrowsEventArgs(Vector3.zero, Quaternion.identity, false));
+                return;
+            }
             if (Input.GetMouseButtonUp(index))
             {
                 _click_point = Input.mousePosition;
@@ -145,6 +181,7 @@ namespace CollisionBall
                 GameEntry.Event.Fire(this, new ForceChangeEventArgs(0.0f));
                 Score -= _force / 100;
                 GameEntry.Event.Fire(this, new ScoreChangeEventArgs(Score));
+                GameEntry.Event.Fire(this, new ShowArrowsEventArgs(screen_point, Quaternion.identity, false));
             }
         }
         private void OnCollisionEnter2D(Collision2D collision)
