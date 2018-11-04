@@ -117,10 +117,26 @@ namespace CollisionBall
             }
             if (collision.transform.tag == "Player")
             {
-                float enemy = collision.transform.GetComponent<EnemyLogic>().score;
-                float tenpercent_enemy = 0.1f * enemy;
-                float tenpercent_our = 0.1f * score;
-                score = score - tenpercent_our + tenpercent_enemy;
+                EnemyLogic logic = collision.transform.GetComponent<EnemyLogic>();
+                if (logic.HasSheild && this.HasSheild)
+                    return;
+                if (logic.HasSheild)
+                {
+                    return;
+                }
+                else if(this.HasSheild)
+                {
+                    float enemy = logic.score;
+                    float tenpercent_enemy = 0.1f * this.GrabFactor * enemy;
+                    score = score + tenpercent_enemy;
+                }
+                else
+                {
+                    float enemy = logic.score;
+                    float tenpercent_enemy = 0.1f * this.GrabFactor * enemy;
+                    float tenpercent_our = 0.1f * logic.GrabFactor * score;
+                    score = score - tenpercent_our + tenpercent_enemy;
+                }
             }
         }
 

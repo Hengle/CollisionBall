@@ -319,22 +319,30 @@
     <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.Builtin.cs" />
     <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.cs" />
     <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.Custom.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Buff\BuffComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant.ProcedureData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EnemyData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\PlayerData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\TargetData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\BuffLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\CameraLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\EnemyLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Entity.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\PlayerLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\TargetLogic.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\AcceptGoSkillArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\AcceptStopSkillArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\ForceChangeEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\GenBuffSkillEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\GoSkillEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\ReleaseBuffSkillEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\ScoreChangeEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\SetImageGreyArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\ShowArrowsEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\StopSkillEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\UpdateBuffCoolTimeArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameBase.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameMode.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\SurvivalGame.cs" />
@@ -345,11 +353,14 @@
     <Compile Include="Assets\GameMain\Scripts\Spawn\SpawnComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\MainForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UGuiForm.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UIExtensionComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UISkillNode.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameFramework\Libraries\GameFramework.xml" />
     <None Include="Assets\GameFramework\Libraries\link.xml" />
+    <None Include="Assets\GameMain\Shader\DefaultGrey.shader" />
     <None Include="C:\Users\Ralphy\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
     <None Include="C:\Users\Ralphy\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Light.uss" />
     <None Include="C:\Users\Ralphy\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Templates\Alert.uxml" />

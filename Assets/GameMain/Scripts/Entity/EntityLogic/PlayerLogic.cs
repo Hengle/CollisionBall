@@ -19,6 +19,8 @@ namespace CollisionBall
         private float _force;
         private float score;
         private float _costScale = 5;
+        private bool _preStateOfStopSkill = false;
+        private bool _preStateOfGoSkill = false;
 
         public float Score
         {
@@ -43,21 +45,72 @@ namespace CollisionBall
             _rigidbody = transform.GetComponent<Rigidbody2D>();
             GameEntry.Event.Subscribe(StopSkillEventArgs.EventId, OnReceiveStopSkill);
             GameEntry.Event.Subscribe(GoSkillEventArgs.EventId, OnReceiveGoSkill);
+            GameEntry.Event.Subscribe(AcceptStopSkillArgs.EventId, OnReceiveAcceptStopSkill);
+            GameEntry.Event.Subscribe(AcceptStopSkillArgs.EventId, OnReceiveAcceptGoSkill);
+            GameEntry.Event.Subscribe(ReleaseBuffSkillEventArgs.EventId, OnReceiveReleaseBuffSkill);
+        }
+
+        private void OnReceiveReleaseBuffSkill(object sender, GameEventArgs e)
+        {
+            ReleaseBuffSkillEventArgs ne = (ReleaseBuffSkillEventArgs)e;
+            BuffType type = (BuffType)ne.BuffType;
+            if (type == BuffType.Shield)
+                this.HasSheild = true;
+            else if (type == BuffType.ImprovedGrab)
+                this.GrabFactor *= 2;
+            else if (type == BuffType.Accelerate)
+                this._rigidbody.velocity = 5 * this._rigidbody.velocity;
+        }
+
+        private void OnReceiveAcceptGoSkill(object sender, GameEventArgs e)
+        {
+            this.GoSkillCnt++;
+            if (!_preStateOfGoSkill)
+            {
+                _preStateOfGoSkill = true;
+                GameEntry.Event.Fire(this, new SetImageGrey(1,false));
+            }
+        }
+
+        private void OnReceiveAcceptStopSkill(object sender, GameEventArgs e)
+        {
+            this.StopSkillCnt++;
+            if (!_preStateOfStopSkill)
+            {
+                _preStateOfStopSkill = true;
+                GameEntry.Event.Fire(this, new SetImageGrey(0,false));
+            }
         }
 
         private void OnReceiveGoSkill(object sender, GameEventArgs e)
         {
+            if (GoSkillCnt == 0)
+                return;
+            GoSkillCnt--;
             Score -= 20;
             GameEntry.Event.Fire(this, new ScoreChangeEventArgs(Score));
             Vector2 dir = _rigidbody.velocity.normalized;
             _rigidbody.velocity += dir * 5;
+            if (GoSkillCnt == 0)
+            {
+                _preStateOfGoSkill = false;
+                GameEntry.Event.Fire(this,new SetImageGrey(1, true));
+            }
         }
 
         private void OnReceiveStopSkill(object sender, GameEventArgs e)
         {
+            if (StopSkillCnt == 0)
+                return;
+            StopSkillCnt--;
             Score -= _rigidbody.velocity.magnitude * _costScale;
             GameEntry.Event.Fire(this, new ScoreChangeEventArgs(Score));
             _rigidbody.velocity = Vector2.zero;
+            if (StopSkillCnt == 0)
+            {
+                _preStateOfStopSkill = false;
+                GameEntry.Event.Fire(this, new SetImageGrey(0, true));
+            }
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -188,6 +241,8 @@ namespace CollisionBall
         {
             if (collision.transform.tag == "Target")
             {
+                GameEntry.Event.Fire(this, new AcceptGoSkillArgs());
+                GameEntry.Event.Fire(this, new AcceptStopSkillArgs());
                 UnityGameFramework.Runtime.Entity target = collision.transform.GetComponent<UnityGameFramework.Runtime.Entity>();
                 GameEntry.Entity.HideEntity(target);
                 SpawnComponent spawner = GameEntry.Spawn;
@@ -201,10 +256,30 @@ namespace CollisionBall
             }
             if (collision.transform.tag == "Player")
             {
-                float enemy = collision.transform.GetComponent<EnemyLogic>().Score;
-                float tenpercent_enemy = 0.1f * enemy;
-                float tenpercent_our = 0.1f * Score;
-                collision.transform.GetComponent<EnemyLogic>().Score = enemy - tenpercent_enemy + tenpercent_our;
+                EnemyLogic logic = collision.transform.GetComponent<EnemyLogic>();
+                if(logic.HasSheild && this.HasSheild){
+                    return;
+                }
+                float enemyScore = 0;
+                float tenpercent_enemy = 0;
+                float tenpercent_our = 0;
+                if (logic.HasSheild)
+                {
+                    enemyScore = collision.transform.GetComponent<EnemyLogic>().Score;
+                    tenpercent_our = 0.1f * logic.GrabFactor * Score;
+                    collision.transform.GetComponent<EnemyLogic>().Score = enemyScore + tenpercent_our;
+                    Score = Score - tenpercent_our;
+                }else if (this.HasSheild)
+                {
+                    enemyScore = collision.transform.GetComponent<EnemyLogic>().Score;
+                    tenpercent_enemy = 0.1f * this.GrabFactor * enemyScore;
+                    collision.transform.GetComponent<EnemyLogic>().Score = enemyScore - tenpercent_enemy;
+                    Score = Score + tenpercent_enemy;
+                }
+                enemyScore = collision.transform.GetComponent<EnemyLogic>().Score;
+                tenpercent_enemy = 0.1f * this.GrabFactor * enemyScore;
+                tenpercent_our = 0.1f * logic.GrabFactor * Score;
+                collision.transform.GetComponent<EnemyLogic>().Score = enemyScore - tenpercent_enemy + tenpercent_our;
                 Score = Score - tenpercent_our + tenpercent_enemy;
                 GameEntry.Event.Fire(this, new ScoreChangeEventArgs(score));
             }

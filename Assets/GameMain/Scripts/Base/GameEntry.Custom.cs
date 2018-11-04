@@ -21,6 +21,18 @@ namespace CollisionBall
             private set;
         }
 
+        public static UIExtensionComponent UIExtension
+        {
+            get;
+            private set;
+        }
+
+        public static BuffComponent Buff
+        {
+            get;
+            set;
+        }
+
         private static void InitCustomComponents()
         {
             Map = UnityGameFramework.Runtime.GameEntry.GetComponent<MapComponent>();
@@ -33,6 +45,9 @@ namespace CollisionBall
                 Log.Info("获取Spawn组件成功");
             else
                 Log.Info("获取Spawn组件失败");
+
+            UIExtension = UnityGameFramework.Runtime.GameEntry.GetComponent<UIExtensionComponent>();
+            Buff = UnityGameFramework.Runtime.GameEntry.GetComponent<BuffComponent>();
         }
     }
 }

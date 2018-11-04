@@ -9,6 +9,12 @@ namespace CollisionBall
         [SerializeField]
         private EntityData m_EntityData = null;
 
+        public float GrabFactor = 1.0f;
+        public bool HasSheild = false;
+
+        public int StopSkillCnt = 0;
+        public int GoSkillCnt = 0;
+
         public int Id
         {
             get

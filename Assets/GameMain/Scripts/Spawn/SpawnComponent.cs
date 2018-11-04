@@ -14,6 +14,10 @@ namespace CollisionBall
         [SerializeField]
         private int _max_enemy = 5;
         [SerializeField]
+        private int _max_buff = 6;
+        [SerializeField]
+        private Vector2 _enemy_range = new Vector2(0,6);
+        [SerializeField]
         private CameraLogic camera;
 
         private List<Vector2> born_list;
@@ -38,7 +42,24 @@ namespace CollisionBall
             ShowPlayerAndEnity();
             GenRamdonPositions(_max_target, out born_points);
             GenNewTaraget(born_points);
+            GenRamdonPositions(_max_buff, out born_points);
+            GenNewBuff(born_points);
+            InvokeRepeating("GenNewBuffInRateTime", 30, 30);
             Debug.Log("TargetSpawner初始化完成");
+        }
+
+        public void GenNewBuffInRateTime()
+        {
+            GameObject[] games = GameObject.FindGameObjectsWithTag("Buff");
+            foreach(GameObject item in games)
+            {
+                Entity logic = item.GetComponent<BuffLogic>();
+                GameEntry.Entity.HideEntity(logic.Entity);
+                RemoveTarget(new Vector2(logic.transform.position.x, logic.transform.position.y));
+            }
+            Vector2[] born_points;
+            GenRamdonPositions(_max_buff, out born_points);
+            GenNewBuff(born_points);
         }
 
         public void ShowPlayerAndEnity()
@@ -66,7 +87,7 @@ namespace CollisionBall
                 Score =1000
             });
 
-            //todo 穿件敌人
+            //todo 创建敌人
             int numOfEnemy = 0;
             while (numOfEnemy < _max_enemy)
             {
@@ -80,7 +101,8 @@ namespace CollisionBall
                     pos_x = cur_column * cell_size - half_width + half_size;
                     pos_y = cur_row * cell_size - half_height + half_size;
                     int enemyId = GameEntry.Entity.GenerateSerialId();
-                    GameEntry.Entity.ShowEnemy("Enemy", new EnemyData(enemyId)
+                    int id = UnityEngine.Random.Range((int)this._enemy_range.x, (int)this._enemy_range.y);
+                    GameEntry.Entity.ShowEnemy(string.Concat("Enemy",id), new EnemyData(enemyId)
                     {
                         Position = new Vector3(pos_x, pos_y, 0),
                         Rotation = Quaternion.identity,
@@ -92,11 +114,6 @@ namespace CollisionBall
 
         // Update is called once per frame
         void Update()
-        {
-
-        }
-
-        public void GeneratePlayer()
         {
 
         }
@@ -155,7 +172,7 @@ namespace CollisionBall
             }
             born_points = temp.ToArray();
         }
-
+        
         public void RemoveTarget(Vector2 position)
         {
             born_list.Remove(position);
@@ -180,11 +197,27 @@ namespace CollisionBall
             {
                 int targetId = GameEntry.Entity.GenerateSerialId();
                 GameEntry.Entity.ShowTarget("Target", new TargetData(targetId) {
+                Position = new Vector3(born_point[i].x, born_point[i].y, 0),
+                Rotation = Quaternion.identity,
+                Score = 50
+             });
+            }
+        }
+
+        public void GenNewBuff(Vector2[] born_point)
+        {
+            int num = born_point.Length;
+            for (int i = 0; i < num; i++)
+            {
+                int buffId = GameEntry.Entity.GenerateSerialId();
+                int id = i % 3 + 1;
+                GameEntry.Entity.ShowBuff(string.Concat("Buff", id), new TargetData(buffId)
+                {
                     Position = new Vector3(born_point[i].x, born_point[i].y, 0),
                     Rotation = Quaternion.identity,
-                    Score = 50
+                    Type = (BuffType)id
+                    //Score = 50
                 });
-                //Instantiate(_target, new Vector3(born_point[i].x, born_point[i].y, 0), Quaternion.identity, _target_root.transform);
             }
         }
 

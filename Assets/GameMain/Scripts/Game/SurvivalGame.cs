@@ -9,6 +9,8 @@ namespace CollisionBall
         private float m_ElapseSeconds = 0f;
         private SpawnComponent m_Spawn;
         private MapComponent m_Map;
+        private int stopSkillCount = 0;
+        private int goSkillCount = 0;
 
         public override GameMode GameMode
         {
@@ -29,10 +31,18 @@ namespace CollisionBall
             base.Initialize();
             m_Map = GameEntry.Map;
             m_Spawn = GameEntry.Spawn;
+            BuffComponent m_Buff = GameEntry.Buff;
             //todo 初始化地图
             m_Map.Init();
             m_Spawn.Init();
+            m_Buff.Init();
             //加载玩家实体
+
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
 
         }
     }

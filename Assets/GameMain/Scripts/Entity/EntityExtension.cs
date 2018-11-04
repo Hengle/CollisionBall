@@ -49,6 +49,11 @@ namespace CollisionBall
             entityComponent.ShowEntity(typeof(TargetLogic), name, "Target", 120, data);
         }
 
+        public static void ShowBuff(this EntityComponent entityComponent, string name, EntityData data)
+        {
+            entityComponent.ShowEntity(typeof(BuffLogic), name, "Target", 130, data);
+        }
+
         private static void ShowEntity(this EntityComponent entityComponent, Type logicType,string name, string entityGroup, int priority, EntityData data)
         {
             if (data == null)
