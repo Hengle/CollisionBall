@@ -657,6 +657,10 @@ MonoBehaviour:
   SkillNode: {fileID: 1773020646660890, guid: 912f8c8b079b6d647b39984750ace35b, type: 2}
   BuffRoot: {fileID: 1698937547637314}
   BuffNode: {fileID: 1412606383489824, guid: 429d537431da0ac409cb81790ffa7c4b, type: 2}
+  sprArray:
+  - {fileID: 21300000, guid: f7313a058a9edf04a89b5de9540eed2c, type: 3}
+  - {fileID: 21300000, guid: 742eaf2ccad0e9b4d9351e77b17e5135, type: 3}
+  - {fileID: 21300000, guid: 4e75c201cb7292549841ab7041d31498, type: 3}
 --- !u!114 &114924756678846076
 MonoBehaviour:
   m_ObjectHideFlags: 1

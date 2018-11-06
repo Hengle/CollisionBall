@@ -12,6 +12,10 @@ namespace CollisionBall
     {
         [SerializeField]
         public Material defaultGreyMaterial;
+        [Header("皮肤")]
+        public Sprite[] sprites;
+        [Header("Buff皮肤")]
+        public Sprite buff_sprite;
 
         public void SetImageGrey(Image image, bool begrey)
         {

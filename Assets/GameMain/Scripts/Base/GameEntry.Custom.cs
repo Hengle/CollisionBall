@@ -33,6 +33,12 @@ namespace CollisionBall
             set;
         }
 
+        public static EntityExtensionComponent EntityExtension
+        {
+            get;
+            set;
+        }
+
         private static void InitCustomComponents()
         {
             Map = UnityGameFramework.Runtime.GameEntry.GetComponent<MapComponent>();
@@ -48,6 +54,7 @@ namespace CollisionBall
 
             UIExtension = UnityGameFramework.Runtime.GameEntry.GetComponent<UIExtensionComponent>();
             Buff = UnityGameFramework.Runtime.GameEntry.GetComponent<BuffComponent>();
+            EntityExtension = UnityGameFramework.Runtime.GameEntry.GetComponent<EntityExtensionComponent>();
         }
     }
 }

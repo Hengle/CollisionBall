@@ -28,6 +28,7 @@ namespace CollisionBall
         GameObject BuffRoot;
         [SerializeField]
         GameObject BuffNode;
+        [SerializeField]
         Sprite[] sprArray;
         int MaxBuffSkillCnt = 4;
         GameObject SheilfNode;
@@ -47,7 +48,7 @@ namespace CollisionBall
             GameEntry.Event.Subscribe(GenBuffSkillEventArgs.EventId, OnReceiveGenBuffEvent);
             GameEntry.Event.Subscribe(ReleaseBuffSkillEventArgs.EventId, OnReceiveReleaseBuffSkill);
             GameEntry.Event.Subscribe(UpdateBuffCoolTimeArgs.EventId, OnReceiveUpdateBuffCoolTime);
-            sprArray = Resources.LoadAll<Sprite>("Image/buff");
+            //sprArray = Resources.LoadAll<Sprite>("Image/buff");
 
             m_stopBtn.onClick.AddListener(delegate { StopBtnOnClick(); });
             m_go_Btn.onClick.AddListener(delegate { GoBtnOnClick(); });
@@ -61,7 +62,10 @@ namespace CollisionBall
             {
                 SheilfNode.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((int)ne.CurTime).ToString() + "s";
                 if (ne.CurTime <= 0)
+                {
                     Destroy(SheilfNode);
+                    SheilfNode = null;
+                }
             }
             if (ne.BuffType == BuffType.ImprovedGrab)
             {
@@ -69,9 +73,18 @@ namespace CollisionBall
                 {
                     GrabNode.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = ((int)ne.CurTime).ToString() + "s";
                     if (ne.CurTime <= 0)
+                    {
                         Destroy(GrabNode);
+                        GrabNode = null;
+                    }
                 }
                
+            }
+
+            if(SheilfNode == null && GrabNode == null)
+            {
+                UnityGameFramework.Runtime.Entity player = GameEntry.Entity.GetEntity(GameEntry.EntityExtension.PlayerId);
+                player.GetComponent<SpriteRenderer>().sprite = ((PlayerLogic)player.Logic).MainSprite;
             }
         }
 

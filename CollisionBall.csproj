@@ -326,6 +326,7 @@
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\PlayerData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\TargetData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtensionComponent.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\BuffLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\CameraLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\EnemyLogic.cs" />

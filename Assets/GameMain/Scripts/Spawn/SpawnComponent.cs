@@ -16,7 +16,7 @@ namespace CollisionBall
         [SerializeField]
         private int _max_buff = 6;
         [SerializeField]
-        private Vector2 _enemy_range = new Vector2(0,6);
+        private Vector2 _enemy_range = new Vector2(0,5);
         [SerializeField]
         private CameraLogic camera;
 
@@ -86,6 +86,7 @@ namespace CollisionBall
                 Rotation =Quaternion.identity,
                 Score =1000
             });
+            GameEntry.EntityExtension.PlayerId = playerId;
 
             //todo 创建敌人
             int numOfEnemy = 0;

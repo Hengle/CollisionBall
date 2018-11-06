@@ -276,6 +276,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1916531783}
+  - {fileID: 1422174996}
   m_Father: {fileID: 1855579068}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -452,6 +453,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1422174995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1422174996}
+  - component: {fileID: 1422174997}
+  m_Layer: 0
+  m_Name: EntityExtension
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1422174996
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1422174995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 388597289}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1422174997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1422174995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820df25169fd0e34ba6edfb267e5cfac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1664377726
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,6 +608,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultGreyMaterial: {fileID: 2100000, guid: 5a1e59a86005d4946a86319c52f2e2a9, type: 2}
+  sprites:
+  - {fileID: 21300000, guid: 0e5a4360b9f95614fb0cba88ce27e2b5, type: 3}
+  - {fileID: 21300000, guid: 6dec3a3264481d34caca3664698c7287, type: 3}
+  - {fileID: 21300000, guid: 3e2d76e652e66614889063deeb2d9705, type: 3}
+  - {fileID: 21300000, guid: e0ceee0543af7de4c81bac822798507b, type: 3}
+  - {fileID: 21300000, guid: 6dfe11509a121a04fa176f9dc2fac827, type: 3}
+  buff_sprite: {fileID: 21300000, guid: fb310d9006bdfb649b7f07187ef4887d, type: 3}
 --- !u!1 &2046408953
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +658,7 @@ MonoBehaviour:
   _max_target: 15
   _max_enemy: 5
   _max_buff: 6
-  _enemy_range: {x: 0, y: 6}
+  _enemy_range: {x: 0, y: 5}
   camera: {fileID: 2052739078}
 --- !u!1 &2052739073
 GameObject:

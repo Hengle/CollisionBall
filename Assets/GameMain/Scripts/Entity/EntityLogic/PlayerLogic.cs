@@ -21,6 +21,7 @@ namespace CollisionBall
         private float _costScale = 5;
         private bool _preStateOfStopSkill = false;
         private bool _preStateOfGoSkill = false;
+        public Sprite MainSprite;
 
         public float Score
         {
@@ -50,6 +51,7 @@ namespace CollisionBall
             GameEntry.Event.Subscribe(ReleaseBuffSkillEventArgs.EventId, OnReceiveReleaseBuffSkill);
         }
 
+
         private void OnReceiveReleaseBuffSkill(object sender, GameEventArgs e)
         {
             ReleaseBuffSkillEventArgs ne = (ReleaseBuffSkillEventArgs)e;
@@ -60,6 +62,7 @@ namespace CollisionBall
                 this.GrabFactor *= 2;
             else if (type == BuffType.Accelerate)
                 this._rigidbody.velocity = 5 * this._rigidbody.velocity;
+            this.GetComponent<SpriteRenderer>().sprite = GameEntry.UIExtension.buff_sprite;
         }
 
         private void OnReceiveAcceptGoSkill(object sender, GameEventArgs e)
@@ -124,6 +127,9 @@ namespace CollisionBall
             m_PlayerData = userData as PlayerData;
             m_ForceScale = m_PlayerData.ForceScale;
             Score = m_PlayerData.Score;
+            int id = UnityEngine.Random.Range(0, 5);
+            this.Entity.GetComponent<SpriteRenderer>().sprite = GameEntry.UIExtension.sprites[id];
+            this.MainSprite = GameEntry.UIExtension.sprites[id];
         }
 
 #if UNITY_2017_3_OR_NEWER
